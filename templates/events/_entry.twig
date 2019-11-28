@@ -1,0 +1,132 @@
+{% extends "_layouts/main" %}
+{% block main %}
+
+<!-- Wrapper -->
+<section id="wrapper">
+    <header>
+        <div class="inner">
+            <h2>{{ entry.title }}</h2>
+            {% if entry.eventDate %}
+            <h3>{{ entry.eventDate | date("F j, Y, g:i a") }}</h3>
+            {% endif %}
+            <h3>{{ entry.eventAddress }}</h3>
+        </div>
+    </header>
+
+        <!-- Content -->
+    <div class="wrapper box alt">
+        <div class="inner row gtr-uniform">
+            {% for event in craft.entries.section('event').limit(1).all() %}
+
+            {# Start Matrix #}
+            {% for block in entry.eventDetails.all() %}
+            {% switch block.type %}
+
+            {# Description #}
+            {% case 'description' %}
+            <section>
+              {{ block.description }}
+            </section>
+
+            {# Image Single Position #}
+            {% case 'imageSinglePosition' %}
+            <section>
+              {% if block.imageSinglePosition %}
+              <div>
+                <span class="image right">
+                <img src="{{ block.imageSingle.one().getUrl() }}" alt="{{ block.altField }}" />
+                </span>{{ block.imageSingleDescription }}
+              </div>
+              {% else %}
+              <div>
+                <span class="image left">
+                <img src="{{ block.imageSingle.one().getUrl() }}" alt="{{ block.altField }}" />
+                </span>{{ block.imageSingleDescription }}
+              </div>
+            {% endif %}
+            </section>
+
+            {# Large Image #}
+            {% case 'imageLargeSingle' %}
+            <div class="col-12">
+              <span class="image fit">
+                <a data-fancybox="gallery" href="{{ block.imageLargeSingle.one().getUrl() }}">
+                  <img src="{{ block.imageLargeSingle.one().getUrl() }}" alt="{{ block.altField }}" />
+                </a>
+              </span>
+            </div>
+
+            {# Medium Double Image #}
+            {% case 'imageMediumDouble' %}
+            <div class="col-6">
+              <span class="image fit">
+                <a data-fancybox="gallery" href="{{ block.imageMediumDouble.one().getUrl() }}">
+                  <img src="{{ block.imageMediumDouble.one().getUrl() }}" alt="{{ block.altField }}" />
+                </a>
+              </span>
+            </div>
+            <div class="col-6">
+              <span class="image fit">
+                <a data-fancybox="gallery" href="{{ block.imageMediumDouble2.one().getUrl() }}">
+                  <img src="{{ block.imageMediumDouble2.one().getUrl() }}" alt="{{ block.altField2 }}" />
+                </a>
+              </span>
+            </div>
+
+            {# Small Tripple Image #}
+            {% case 'imageSmallTripple' %}
+            <div class="col-4">
+              <span class="image fit">
+                <a data-fancybox="gallery" href="{{ block.imageSmallTripple.one().getUrl() }}">
+                  <img src="{{ block.imageSmallTripple.one().getUrl() }}" alt="{{ block.altField }}" />
+                </a>
+              </span>
+            </div>
+            <div class="col-4">
+              <span class="image fit">
+                <a data-fancybox="gallery" href="{{ block.imageSmallTripple2.one().getUrl() }}">
+                  <img src="{{ block.imageSmallTripple2.one().getUrl() }}" alt="{{ block.altField2 }}" />
+                </a>
+              </span>
+            </div>
+            <div class="col-4">
+              <span class="image fit">
+                <a data-fancybox="gallery" href="{{ block.imageSmallTripple3.one().getUrl() }}">
+                  <img src="{{ block.imageSmallTripple3.one().getUrl() }}" alt="{{ block.altField3 }}" />
+                </a>
+              </span>
+            </div>
+
+            {# Table #}
+            {% case 'table' %}
+            <section>
+              <h3 class="major">{{ block.tableTitle }}</h3>
+              <div class="table-wrapper">
+                  <table>
+                      <thead>
+                          <tr>
+                              <th>Name</th>
+                              <th>Description</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for row in block.table %}
+                          <tr>
+                              <td>{{ row.name }}</td>
+                              <td>{{ row.description }}</td>
+                          </tr>
+                          {% endfor %}
+                      </tbody>
+                  </table>
+              </div>
+            </section>
+
+            {% endswitch %}
+            {% endfor %}
+            {# End Matrix #}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

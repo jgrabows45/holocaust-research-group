@@ -1,0 +1,68 @@
+{% extends "_layouts/main" %}
+
+{% block main %}
+
+
+<!-- Wrapper -->
+<section id="wrapper">
+    <header>
+        <div class="inner">
+            {% for entry in craft.entries.section('eventsHome').all() %}
+            <h2>{{ entry.eventTitle }}</h2>
+            <p>{{ entry.eventDescription }}</p>
+            {% endfor %}
+        </div>
+    </header>
+</section>
+
+{% paginate craft.entries.section('event').limit(10) as eventEntries %}
+
+<!-- Wrapper -->
+<section id="wrapper">
+    <div class="events">
+        {% for entry in eventEntries %}
+        <!-- One -->
+        <section class="wrapper spotlight">
+          <div class="inner">
+            {% for block in entry.eventImage.all() %}
+            {# image block #}
+            {% if block.type == 'eventImage' %}
+            <a href="{{ entry.url }}" class="image"><img src="{{ block.eventImage.one().getUrl("twoSeventySixThumb") }}" alt="{{ block.altField }}" /></a>
+            {% endif %}
+            {% endfor %}
+            <div class="content">
+              <h2 class="major">{{ entry.title }}</h2>
+              <h3>{{ entry.eventDate | date("F j, Y, g:i a") }}</h3>
+              <h4>{{ entry.eventAddress }}</h4>
+              <p>{{ entry.eventSummary }}</p>
+              <a href="{{ entry.url }}" class="special">Learn more</a>
+            </div>
+          </div>
+        </section>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="events">
+  <ul class="pagination">
+  {% if paginate.prevUrl %}
+    <li class="previous"><a href="{{ paginate.prevUrl }}" class="button small">Prev</a></li>
+  {% endif %}
+      
+  {% for page, url in paginate.getPrevUrls(3) %}
+    <li><a href="{{ url }}">{{ page }}</a></li>
+  {% endfor %}
+
+  <li class="page active">{{ paginate.currentPage }}</li>
+
+  {% for page, url in paginate.getNextUrls(3) %}
+      <li><a href="{{ url }}">{{ page }}</a></li>
+  {% endfor %}
+
+  {% if paginate.nextUrl %}
+    <li class="next"><a href="{{ paginate.nextUrl }}" class="button small">Next</a></li>
+  {% endif %}
+  </ul>
+</section>
+
+{% endblock %}

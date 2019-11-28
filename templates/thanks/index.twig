@@ -1,0 +1,27 @@
+{% extends "_layouts/main" %}
+
+{% block main %}
+
+  <!-- Wrapper -->
+  <section id="wrapper">
+    <header>
+      <div class="inner">
+        {% for entry in craft.entries.section('thanks').all() %}
+        <h2>{{ entry.title }}</h2>
+        <p>{{ entry.subtitle }}</p>
+        {% endfor %}
+      </div>
+    </header>
+
+  <!-- Wrapper -->
+  <section id="wrapper">
+    <!-- Content -->
+    <div class="wrapper">
+      <div class="inner">
+        {% for entry in craft.entries.section('thanks').all() %}
+          {{ entry.description }}
+        {% endfor %}
+
+      </div>
+  </div>
+{% endblock %}

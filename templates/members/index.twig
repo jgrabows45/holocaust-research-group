@@ -1,0 +1,69 @@
+{% extends "_layouts/main" %}
+
+{% block main %}
+
+<!-- Wrapper -->
+<section id="wrapper">
+  <header>
+    <div class="inner">
+      <h2>Members</h2>
+      <p>Holocaust Research Group Members</p>
+    </div>
+  </header>
+  <!-- Wrapper -->
+  <section id="wrapper">
+
+      {% paginate craft.entries.section('member').orderBy('lft desc').limit(10) as memberEntries %}
+      <!-- Four -->
+      <section id="four" class="wrapper alt style1">
+          <div class="inner">
+          <!--<h2 class="major">Members</h2>
+              <p>Holocaust Research Group Members</p> -->
+              <section class="features">
+                  {% for entry in memberEntries %}
+                  <article>
+                    {% for block in entry.memberImage.all() %}
+                    {# image block #}
+                    {% if block.type == 'memberImage' %}
+                    <a href="#" class="image"><img src="{{ block.memberImage.one().getUrl("fiveHundredSixTwoNinetyFiveThumb") }}" alt="{{ block.altField }}" /></a>
+                    {% endif %}
+                    {% endfor %}
+                    <h3 class="major">{{ entry.title }}</h3>
+                    <p>{{ entry.memberOccupation }}</p>
+                    <p>{{ entry.memberDescription }}</p>
+                    <h5>University Degrees</h5>
+                    {% for row in entry.memberDegrees %}
+                    <p class="no-margin">{{ row.year }} ― {{ row.degree }}</p>
+                    {% endfor %}
+                    <h5 class="margin-top">Fields of Interest</h5>
+                    <p>{{ entry.memberInterests }}</p>
+                    <!-- <a href="#" class="special">View Profile</a> -->
+                  </article>
+                  {% endfor %}
+              </section>
+          </div>
+      </section>
+
+      <section class="spotlight">
+        <ul class="pagination">
+        {% if paginate.prevUrl %}
+          <li class="previous"><a href="{{ paginate.prevUrl }}" class="button small">Prev</a></li>
+        {% endif %}
+            
+        {% for page, url in paginate.getPrevUrls(3) %}
+          <li><a href="{{ url }}">{{ page }}</a></li>
+        {% endfor %}
+
+        <li class="page active">{{ paginate.currentPage }}</li>
+
+        {% for page, url in paginate.getNextUrls(3) %}
+            <li><a href="{{ url }}">{{ page }}</a></li>
+        {% endfor %}
+
+        {% if paginate.nextUrl %}
+          <li class="next"><a href="{{ paginate.nextUrl }}" class="button small">Next</a></li>
+        {% endif %}
+        </ul>
+      </section>
+  </section>
+{% endblock %}

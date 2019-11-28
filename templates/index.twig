@@ -1,0 +1,84 @@
+{% extends "_layouts/main" %}
+
+{% block main %}
+
+<!-- Banner -->
+<section id="banner">
+  <div class="inner">
+    <div class="logo"></span><i class="fas fa-university"></i></div>
+    <h2>Holocaust Research Group</h2>
+    <h3>Groupe de Recherche sur l'Holocauste</h3>
+    {% for home in craft.entries.section('home').all() %}
+    <p>{{ home.subtitle }}</p>
+    <div class="home-intro">
+      {{ home.description }}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Wrapper -->
+<section id="wrapper" class="home">
+
+<h2 class="events">Events</h2>
+
+  <div class="events">
+    {% for entry in craft.entries.section('event').limit(3).all() %}
+    <!-- One -->
+    <section class="wrapper spotlight">
+      <div class="inner">
+        {% for block in entry.eventImage.all() %}
+        {# image block #}
+        {% if block.type == 'eventImage' %}
+        <a href="{{ entry.url }}" class="image"><img src="{{ block.eventImage.one().getUrl("twoSeventySixThumb") }}" alt="{{ block.altField }}" /></a>
+        {% endif %}
+        {% endfor %}
+        <div class="content">
+          <h2 class="major">{{ entry.title }}</h2>
+          {% if entry.eventDate %}
+            <h3>{{ entry.eventDate | date("F j, Y, g:i a") }}</h3>
+          {% endif %}
+          <!-- <h3>{# {{ entry.eventDate | date('M d, Y') }}#}</h3> -->
+          <h4>{{ entry.eventAddress }}</h4>
+          <p>{{ entry.eventSummary }}</p>
+          <a href="{{ entry.url }}" class="special">Learn more</a>
+        </div>
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+
+  <section id="four" class="wrapper alt style1">
+    <div class="inner">
+      <h2 class="major">Members</h2>
+      <p>Holocaust Research Group Members</p>
+      <section class="features">
+        {% for entry in craft.entries.section('member').orderBy('lft desc').limit(4).all() %}
+        <article>
+          {% for block in entry.memberImage.all() %}
+          {# image block #}
+          {% if block.type == 'memberImage' %}
+          <a href="#" class="image"><img src="{{ block.memberImage.one().getUrl("fiveHundredSixTwoNinetyFiveThumb") }}" alt="{{ block.altField }}" /></a>
+          {% endif %}
+          {% endfor %}
+          <h3 class="major">{{ entry.title }}</h3>
+          <p>{{ entry.memberOccupation }}</p>
+          <p>{{ entry.memberDescription }}</p>
+          <h5>University Degrees</h5>
+          {% for row in entry.memberDegrees %}
+          <p class="no-margin">{{ row.year }} ― {{ row.degree }}</p>
+          {% endfor %}
+          <h5 class="margin-top">Fields of Interest</h5>
+          <p>{{ entry.memberInterests }}</p>
+          <!-- <a href="#" class="special">View Profile</a> -->
+        </article>
+        {% endfor %}
+      </section>
+      <ul class="actions">
+        <li><a href="/members" class="button">See All Members</a></li>
+      </ul>
+    </div>
+  </section>
+</section>
+
+{% endblock %}

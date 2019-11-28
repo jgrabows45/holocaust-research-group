@@ -1,0 +1,76 @@
+{% extends "_layouts/main" %}
+{% block main %}
+
+<!-- Wrapper -->
+<section id="wrapper">
+    <header>
+        <div class="inner">
+            {% for entry in craft.entries.section('researchHome').all() %}
+            <h2>{{ entry.researchTitle }}</h2>
+            <p>{{ entry.researchDescription }}</p>
+            {% endfor %}
+        </div>
+    </header>
+
+    <!-- Content -->
+        <div class="wrapper">
+            <div class="inner">
+                {#
+                {% for entry in craft.entries.section('researchHome').all() %}
+                <h3 class="major">{{ entry.researchTitle }}</h3>
+                <p>{{ entry.researchDescription }}</p>
+                {% endfor %}#}
+
+                {% paginate craft.entries.section('research').limit(10) as researchEntries %}
+
+                <section class="features">
+                    {% for entry in researchEntries %}
+                    <article>
+                          {% for block in entry.researchImage.all() %}
+                          {# image block #}
+                          {% if block.type == 'researchImage' %}
+                          <a href="{{ entry.url }}" class="image"><img src="{{ block.researchImage.one().getUrl("fiveHundredSixTwoNinetyFiveThumb") }}" alt="{{ block.altField }}" /></a>
+                          {% endif %}
+                          {% endfor %}
+                        <h3 class="major">{{ entry.title }}</h3>
+                        <p>{{ entry.researchSummary }}</p>
+                        <a href="{{ entry.url }}" class="special">Learn more</a>
+                    </article>
+                    {% endfor %}
+                </section>
+
+                <section class="spotlight">
+                  <ul class="pagination">
+                      {% if paginate.prevUrl %}
+                        <li class="previous"><a href="{{ paginate.prevUrl }}" class="button small">Prev</a></li>
+                      {% endif %}
+                          
+                      {% for page, url in paginate.getPrevUrls(3) %}
+                        <li><a href="{{ url }}">{{ page }}</a></li>
+                      {% endfor %}
+
+                      <li class="page active">{{ paginate.currentPage }}</li>
+
+                      {% for page, url in paginate.getNextUrls(3) %}
+                          <li><a href="{{ url }}">{{ page }}</a></li>
+                      {% endfor %}
+
+                      {% if paginate.nextUrl %}
+                        <li class="next"><a href="{{ paginate.nextUrl }}" class="button small">Next</a></li>
+                      {% endif %}
+                  </ul>
+                </section>
+
+                <section class="resources">
+                    {% for entry in craft.entries.section('researchHome').all() %}
+
+                    {{ entry.researchResources }}
+
+                    {% endfor %}
+                </section>
+
+            </div>
+        </div>
+</section>
+
+{% endblock %}
