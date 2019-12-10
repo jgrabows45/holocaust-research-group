@@ -13,7 +13,7 @@
   <!-- Wrapper -->
   <section id="wrapper">
 
-      {% paginate craft.entries.section('member').orderBy('dateCreated desc').limit(10) as memberEntries %}
+      {% paginate craft.entries.section('member').orderBy('dateCreated asc').limit(10) as memberEntries %}
       <!-- Four -->
       <section id="four" class="wrapper alt style1">
           <div class="inner">

@@ -53,7 +53,7 @@
       <h2 class="major">Members</h2>
       <p>Holocaust Research Group Members</p>
       <section class="features">
-        {% for entry in craft.entries.section('member').orderBy('dateCreated desc').limit(4).all() %}
+        {% for entry in craft.entries.section('member').orderBy('dateCreated asc').limit(4).all() %}
         <article>
           {% for block in entry.memberImage.all() %}
           {# image block #}
