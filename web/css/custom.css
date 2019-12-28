@@ -163,7 +163,7 @@ li.alert.alert-danger {
 body footer div.inner ul {
     display: inline-block;
     list-style-type: none;
-    width: 49%;
+    /*width: 49%;*/
     padding: 0 2em;
 }
 
