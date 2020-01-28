@@ -175,6 +175,7 @@ ul.copyright-text {
 
 footer div.inner ul.icons {
     text-align: center;
+    width: 100%;
 }
 
 footer div.inner ul li {
@@ -186,7 +187,10 @@ footer ul.copyright li {
 }
 
 @media (min-width: 590px) {
-
+    
+    footer div.inner ul.icons {
+        width: 50%;
+    }
 }
 
 @media (max-width: 767px) {
